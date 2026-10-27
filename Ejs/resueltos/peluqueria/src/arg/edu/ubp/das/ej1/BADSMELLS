@@ -1,0 +1,25 @@
+--- Refused bequest (legado rechazado) ---
+causa principal class Peluquero extends Turno
+Peluquero recibe String telefonoCliente,String fecha,String hora, que deberian ser cosas de turno.
+
+--- Long parameter list ---
+Constructor de clase peluquero es grande.
+Peluquero(
+    nombreCliente,
+    telefonoCliente,
+    fecha,
+    hora,
+    duracion,
+    nombre,
+    especialidad,
+    salario
+)
+
+
+--- Posible Feature Envy ---
+toString() original estaba dentro de Peluquero, aunque trabajaba principalmente con datos correspondientes al turno:
+fecha
+hora
+duracion
+nombreCliente
+telefonoCliente
