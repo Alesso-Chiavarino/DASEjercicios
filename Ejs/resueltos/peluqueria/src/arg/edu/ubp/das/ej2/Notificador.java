@@ -2,59 +2,18 @@ package arg.edu.ubp.das.ej2;
 
 public class Notificador {
 
-    public void enviarRecordatorio(String nombreCliente,
-                                   String telefonoCliente,
-                                   String nombrePeluquero,
-                                   String especialidadPeluquero,
-                                   String fecha,
-                                   String hora) {
+    public void enviarRecordatorio(Turno turno) {
 
         System.out.println("Recordatorio de turno");
-        System.out.println("Cliente: " + nombreCliente + " - Tel: " + telefonoCliente);
-        System.out.println("Peluquero: " + nombrePeluquero + " (" + especialidadPeluquero + ")");
-        System.out.println("Fecha: " + fecha + " Hora: " + hora);
+        System.out.println("Cliente: " + turno.getDatosEnvio().getNombreCliente() + " - Tel: " + turno.getDatosEnvio().getTelefonoCliente());
+        System.out.println("Peluquero: " + turno.getDatosEnvio().getNombrePeluquero() + " (" + turno.getDatosEnvio().getEspecialidadPeluquero() + ")");
+        System.out.println("Fecha: " + turno.getFecha() + " Hora: " + turno.getHora());
     }
 
-    public void enviarEncuesta(String nombreCliente,
-                               String telefonoCliente,
-                               String nombrePeluquero,
-                               String especialidadPeluquero,
-                               String fecha,
-                               String hora) {
+    public void enviarEncuesta(Turno turno) {
         System.out.println("Encuesta de satisfacción");
-        System.out.println("Cliente: " + nombreCliente + " - Tel: " + telefonoCliente);
-        System.out.println("Peluquero: " + nombrePeluquero + " (" + especialidadPeluquero + ")");
-        System.out.println("Turno atendido el " + fecha + " a las " + hora);
-    }
-
-    private void pintarPersonas(String nombreCliente,
-                                String telefonoCliente,
-                                String nombrePeluquero,
-                                String especialidadPeluquero) {
-        System.out.println("Cliente: " + nombreCliente + " - Tel: " + telefonoCliente);
-        System.out.println("Peluquero: " + nombrePeluquero + " (" + especialidadPeluquero + ")");
-    }
-
-    public void enviarNotificacion(String tipo,
-            String nombreCliente,
-                                   String telefonoCliente,
-                                   String nombrePeluquero,
-                                   String especialidadPeluquero,
-                                   String fecha,
-                                   String hora) {
-
-        switch (tipo) {
-            case "encuesta": {
-                System.out.println("Encuesta de satisfacción");
-                this.pintarPersonas();
-                System.out.println("Turno atendido el " + fecha + " a las " + hora);
-            }
-            case "recordatorio": {
-                System.out.println("Recordatorio de turno");
-                System.out.println("Fecha: " + fecha + " Hora: " + hora);
-            }
-            default:
-        }
-
+        System.out.println("Cliente: " + turno.getDatosEnvio().getNombreCliente() + " - Tel: " + turno.getDatosEnvio().getTelefonoCliente());
+        System.out.println("Peluquero: " + turno.getDatosEnvio().getNombrePeluquero() + " (" + turno.getDatosEnvio().getEspecialidadPeluquero() + ")");
+        System.out.println("Turno atendido el " + turno.getFecha() + " a las " + turno.getHora());
     }
 }

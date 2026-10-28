@@ -1,0 +1,6 @@
+BAD SMELL: Primitive obsession (obsesión primitiva)
+REFACTORIZACION APLICADA:
+Introduce parameter object (introducir parámetro objeto): La clase "Envio" maneja los datos de la direccion
+en múltiples atributos. Se crea una clase "Direccion" que contiene los atributos de la direccion y se pasa como
+parametro al metodo "procesarEnvio()" de la clase "Envio".
+También se cambió el tipo de dato del parámetro "fecha" para que sea más apropiado a lo que representa.

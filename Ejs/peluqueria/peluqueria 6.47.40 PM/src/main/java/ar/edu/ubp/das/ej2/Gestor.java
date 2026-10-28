@@ -45,9 +45,9 @@ public class Gestor {
 
         for (int i = 0; i < nombresClientes.size(); i++) {
             if (nombresClientes.get(i).equals(nombreCliente)
-                && telefonosClientes.get(i).equals(telefonoCliente)
-                && nombresPeluqueros.get(i).equals(nombrePeluquero)
-                && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)) {
+                    && telefonosClientes.get(i).equals(telefonoCliente)
+                    && nombresPeluqueros.get(i).equals(nombrePeluquero)
+                    && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)) {
                 indiceEncontrado = i;
                 break;
             }
@@ -65,13 +65,13 @@ public class Gestor {
         }
         else {
             registrarTurno(
-                nombreCliente,
-                telefonoCliente,
-                nombrePeluquero,
-                especialidadPeluquero,
-                nuevaFecha,
-                nuevaHora,
-                nuevoMonto
+                    nombreCliente,
+                    telefonoCliente,
+                    nombrePeluquero,
+                    especialidadPeluquero,
+                    nuevaFecha,
+                    nuevaHora,
+                    nuevoMonto
             );
             System.out.println("No existía el turno. Se creó uno nuevo.");
         }
@@ -110,17 +110,17 @@ public class Gestor {
 
         for (int i = 0; i < nombresClientes.size(); i++) {
             if (nombresClientes.get(i).equals(nombreCliente)
-                && telefonosClientes.get(i).equals(telefonoCliente)
-                && nombresPeluqueros.get(i).equals(nombrePeluquero)
-                && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)
-                && !turnosFinalizados.get(i)) {
+                    && telefonosClientes.get(i).equals(telefonoCliente)
+                    && nombresPeluqueros.get(i).equals(nombrePeluquero)
+                    && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)
+                    && !turnosFinalizados.get(i)) {
                 notificador.enviarRecordatorio(
-                    nombreCliente,
-                    telefonoCliente,
-                    nombrePeluquero,
-                    especialidadPeluquero,
-                    fechas.get(i),
-                    horas.get(i)
+                        nombreCliente,
+                        telefonoCliente,
+                        nombrePeluquero,
+                        especialidadPeluquero,
+                        fechas.get(i),
+                        horas.get(i)
                 );
             }
         }
@@ -135,20 +135,20 @@ public class Gestor {
 
         for (int i = 0; i < nombresClientes.size(); i++) {
             if (nombresClientes.get(i).equals(nombreCliente)
-                && telefonosClientes.get(i).equals(telefonoCliente)
-                && nombresPeluqueros.get(i).equals(nombrePeluquero)
-                && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)
-                && turnosFinalizados.get(i)) {
+                    && telefonosClientes.get(i).equals(telefonoCliente)
+                    && nombresPeluqueros.get(i).equals(nombrePeluquero)
+                    && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)
+                    && turnosFinalizados.get(i)) {
                 LocalDate fechaTurno = convertirFechaAReal(fechas.get(i));
 
                 if ((fechaTurno != null && fechaTurno.isBefore(hoy)) || turnosFinalizados.get(i)) {
                     notificador.enviarEncuesta(
-                        nombreCliente,
-                        telefonoCliente,
-                        nombrePeluquero,
-                        especialidadPeluquero,
-                        fechas.get(i),
-                        horas.get(i)
+                            nombreCliente,
+                            telefonoCliente,
+                            nombrePeluquero,
+                            especialidadPeluquero,
+                            fechas.get(i),
+                            horas.get(i)
                     );
 
                     turnosFinalizados.set(i, true);

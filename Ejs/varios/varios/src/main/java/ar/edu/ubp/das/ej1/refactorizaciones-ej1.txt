@@ -1,0 +1,18 @@
+BAD SMELL: Intimidad Inadecuada
+La clase "Transferencia" accede a la parte privada de la clase "CuentaBancaria" lo que genera el bad smell
+"Intimidad Inadecuada" en la última clase.
+REFACTORIZACIONES APLICADAS:
+Encapsulate Field: Se agregaron los modificadores de acceso sobre los atributos de la clase "CuentaBancaria".
+Se crearon los métodos getters y dos métodos uno para incrementar el saldo y otro para restar el mismo.
+
+BAD SMELL: Envidia de características
+La clase "Transferencia" cuenta con el método "imprimirDetalleTitular" que utiliza información de la clase
+"CuentaBancaria" por lo que está presente el bad smell "Envidia de características".
+REFACTORIZACIONES APLICADAS:
+Move Method: Se pasó el método "imprimirDetalleTitular" a la clase "CuentaBancaria", se quitó el argumento,
+la declaración estática y se aplicó el uso de la palabra clave "this" para referenciar al propio objeto.
+También se movió el método "realizarTransferencia" a la misma clase, se quitó el argumento que representaba
+la cuenta de origen, la declaración estática y se aplicó el uso de la palabra reservada "this" para referenciar
+al propio objeto. Se corrigió el método de la clase "Transferencia" para que haga uso del mismo.
+Esta última refactorización generó el bad smell "Clase perezosa" por lo que se decidió eliminar la misma
+usando directamente el método de la clase "CuentaBancaria".

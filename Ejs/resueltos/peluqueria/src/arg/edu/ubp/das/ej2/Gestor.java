@@ -6,95 +6,64 @@ import java.util.List;
 
 public class Gestor {
 
-    private List<String> nombresClientes = new ArrayList<>();
-    private List<String> telefonosClientes = new ArrayList<>();
-    private List<String> nombresPeluqueros = new ArrayList<>();
-    private List<String> especialidadesPeluqueros = new ArrayList<>();
-    private List<String> fechas = new ArrayList<>();
-    private List<String> horas = new ArrayList<>();
-    private List<Double> montos = new ArrayList<>();
-    private List<Boolean> turnosFinalizados = new ArrayList<>();
+    private List<Turno> turnos = new ArrayList<>();
 
-    public void registrarTurno(String nombreCliente,
-                               String telefonoCliente,
-                               String nombrePeluquero,
-                               String especialidadPeluquero,
-                               String fecha,
-                               String hora,
-                               double monto) {
-        nombresClientes.add(nombreCliente);
-        telefonosClientes.add(telefonoCliente);
-        nombresPeluqueros.add(nombrePeluquero);
-        especialidadesPeluqueros.add(especialidadPeluquero);
-        fechas.add(fecha);
-        horas.add(hora);
-        montos.add(monto);
-        turnosFinalizados.add(false);
+    private Integer buscarIndiceCliente(DatosEnvio datosEnvio) {
+        int indiceEncontrado = -1;
+
+        for (int i = 0; i < turnos.size(); i++) {
+            DatosEnvio turnoIterado = turnos.get(i).getDatosEnvio();
+
+            if (turnoIterado.getNombreCliente().equals(datosEnvio.getNombreCliente())
+                    && turnoIterado.getTelefonoCliente().equals(datosEnvio.getTelefonoCliente())
+                    && turnoIterado.getNombrePeluquero().equals(datosEnvio.getNombrePeluquero())
+                    && turnoIterado.getEspecialidadPeluquero().equals(datosEnvio.getEspecialidadPeluquero())) {
+                indiceEncontrado = i;
+                break;
+            }
+        }
+
+        return indiceEncontrado;
+    }
+
+    public void registrarTurno(Turno turno) {
+        turno.setFinalizado(false);
+        turnos.add(turno);
 
         System.out.println("Turno registrado.");
     }
 
-    public void actualizarTurno(String nombreCliente,
-                                String telefonoCliente,
-                                String nombrePeluquero,
-                                String especialidadPeluquero,
-                                String nuevaFecha,
-                                String nuevaHora,
-                                double nuevoMonto) {
-        int indiceEncontrado = -1;
+    public void actualizarTurno(Turno nuevoTurno) {
 
-        for (int i = 0; i < nombresClientes.size(); i++) {
-            if (nombresClientes.get(i).equals(nombreCliente)
-                && telefonosClientes.get(i).equals(telefonoCliente)
-                && nombresPeluqueros.get(i).equals(nombrePeluquero)
-                && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)) {
-                indiceEncontrado = i;
-                break;
-            }
-        }
+        int indiceEncontrado = this.buscarIndiceCliente(nuevoTurno.getDatosEnvio());
 
         if (indiceEncontrado != -1) {
-            if (turnosFinalizados.get(indiceEncontrado)) {
+            Turno turno = turnos.get(indiceEncontrado);
+            if (turno.getFinalizado()) {
                 System.out.println("El turno ya fue ejecutado y no puede actualizarse.");
                 return;
             }
-            fechas.set(indiceEncontrado, nuevaFecha);
-            horas.set(indiceEncontrado, nuevaHora);
-            montos.set(indiceEncontrado, nuevoMonto);
+
+            Turno turnoEncontrado = turnos.get(indiceEncontrado);
+            turnoEncontrado.setFecha(nuevoTurno.getFecha());
+            turnoEncontrado.setHora(nuevoTurno.getHora());
+            turnoEncontrado.setMonto(nuevoTurno.getMonto());
+
             System.out.println("Turno actualizado.");
         }
         else {
-            registrarTurno(
-                nombreCliente,
-                telefonoCliente,
-                nombrePeluquero,
-                especialidadPeluquero,
-                nuevaFecha,
-                nuevaHora,
-                nuevoMonto
-            );
+            registrarTurno(nuevoTurno);
             System.out.println("No existía el turno. Se creó uno nuevo.");
         }
     }
 
-    public void ejecutarTurno(String nombreCliente,
-                              String telefonoCliente,
-                              String nombrePeluquero,
-                              String especialidadPeluquero) {
-        int indiceEncontrado = -1;
+    public void ejecutarTurno(DatosEnvio datosEnvio) {
 
-        for (int i = 0; i < nombresClientes.size(); i++) {
-            if (nombresClientes.get(i).equals(nombreCliente)
-                    && telefonosClientes.get(i).equals(telefonoCliente)
-                    && nombresPeluqueros.get(i).equals(nombrePeluquero)
-                    && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)) {
-                indiceEncontrado = i;
-                break;
-            }
-        }
+        int indiceEncontrado = this.buscarIndiceCliente(datosEnvio);
 
         if (indiceEncontrado != -1) {
-            turnosFinalizados.set(indiceEncontrado, true);
+            Turno turno = turnos.get(indiceEncontrado);
+            turno.setFinalizado(true);
             System.out.println("Turno marcado como ejecutado.");
         }
         else {
@@ -102,56 +71,69 @@ public class Gestor {
         }
     }
 
-    public void enviarNotificacion(String nombreCliente,
-                                   String telefonoCliente,
-                                   String nombrePeluquero,
-                                   String especialidadPeluquero) {
+    public void enviarNotificacion(DatosEnvio datosEnvio) {
         Notificador notificador = new Notificador();
 
-        for (int i = 0; i < nombresClientes.size(); i++) {
-            if (nombresClientes.get(i).equals(nombreCliente)
-                && telefonosClientes.get(i).equals(telefonoCliente)
-                && nombresPeluqueros.get(i).equals(nombrePeluquero)
-                && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)
-                && !turnosFinalizados.get(i)) {
-                notificador.enviarRecordatorio(
-                    nombreCliente,
-                    telefonoCliente,
-                    nombrePeluquero,
-                    especialidadPeluquero,
-                    fechas.get(i),
-                    horas.get(i)
-                );
+        for (int i = 0; i < turnos.size(); i++) {
+
+            Turno turnoIterado = turnos.get(i);
+            DatosEnvio turnoEnvioIterado = turnoIterado.getDatosEnvio();
+
+            if (turnoIterado.getDatosEnvio().getNombreCliente().equals(datosEnvio.getNombreCliente())
+                    && turnoEnvioIterado.getTelefonoCliente().equals(datosEnvio.getTelefonoCliente())
+                    && turnoEnvioIterado.getNombrePeluquero().equals(datosEnvio.getNombrePeluquero())
+                    && turnoEnvioIterado.getEspecialidadPeluquero().equals(datosEnvio.getEspecialidadPeluquero())
+                    && !turnoIterado.getFinalizado()) {
+
+                Turno turnoEnvio = new Turno();
+                DatosEnvio datosEnvioFinalizado = new DatosEnvio();
+
+                datosEnvioFinalizado.setNombreCliente(datosEnvio.getNombreCliente());
+                datosEnvioFinalizado.setTelefonoCliente(datosEnvio.getTelefonoCliente());
+                datosEnvioFinalizado.setNombrePeluquero(datosEnvio.getNombrePeluquero());
+                datosEnvioFinalizado.setEspecialidadPeluquero(datosEnvio.getEspecialidadPeluquero());
+
+                turnoEnvio.setDatosEnvio(datosEnvioFinalizado);
+                turnoEnvio.setFecha(turnoIterado.getFecha());
+                turnoEnvio.setHora(turnoIterado.getHora());
+                turnoEnvio.setMonto(turnoIterado.getMonto());
+
+                notificador.enviarRecordatorio(turnoEnvio);
             }
         }
     }
 
-    public void enviarEncuesta(String nombreCliente,
-                               String telefonoCliente,
-                               String nombrePeluquero,
-                               String especialidadPeluquero) {
+    public void enviarEncuesta(DatosEnvio datosEnvio) {
         Notificador notificador = new Notificador();
         LocalDate hoy = LocalDate.now();
 
-        for (int i = 0; i < nombresClientes.size(); i++) {
-            if (nombresClientes.get(i).equals(nombreCliente)
-                && telefonosClientes.get(i).equals(telefonoCliente)
-                && nombresPeluqueros.get(i).equals(nombrePeluquero)
-                && especialidadesPeluqueros.get(i).equals(especialidadPeluquero)
-                && turnosFinalizados.get(i)) {
-                LocalDate fechaTurno = convertirFechaAReal(fechas.get(i));
+        for (int i = 0; i < turnos.size(); i++) {
+            Turno turnoIterado = turnos.get(i);
+            DatosEnvio turnoEnvioIterado = turnoIterado.getDatosEnvio();
 
-                if ((fechaTurno != null && fechaTurno.isBefore(hoy)) || turnosFinalizados.get(i)) {
-                    notificador.enviarEncuesta(
-                        nombreCliente,
-                        telefonoCliente,
-                        nombrePeluquero,
-                        especialidadPeluquero,
-                        fechas.get(i),
-                        horas.get(i)
-                    );
+            if (turnoIterado.getDatosEnvio().getNombreCliente().equals(datosEnvio.getNombreCliente())
+                    && turnoEnvioIterado.getTelefonoCliente().equals(datosEnvio.getTelefonoCliente())
+                    && turnoEnvioIterado.getNombrePeluquero().equals(datosEnvio.getNombrePeluquero())
+                    && turnoEnvioIterado.getEspecialidadPeluquero().equals(datosEnvio.getEspecialidadPeluquero())
+                    && turnoIterado.getFinalizado()) {
+                LocalDate fechaTurno = convertirFechaAReal(turnoIterado.getFecha());
 
-                    turnosFinalizados.set(i, true);
+                if ((fechaTurno != null && fechaTurno.isBefore(hoy)) || turnoIterado.getFinalizado()) {
+
+                    Turno turnoEnvio = new Turno();
+                    DatosEnvio datosEnvioFinalizado = new DatosEnvio();
+
+                    datosEnvioFinalizado.setNombreCliente(datosEnvio.getNombreCliente());
+                    datosEnvioFinalizado.setTelefonoCliente(datosEnvio.getTelefonoCliente());
+                    datosEnvioFinalizado.setNombrePeluquero(datosEnvio.getNombrePeluquero());
+                    datosEnvioFinalizado.setEspecialidadPeluquero(datosEnvio.getEspecialidadPeluquero());
+
+                    turnoEnvio.setDatosEnvio(datosEnvioFinalizado);
+                    turnoEnvio.setFecha(turnoIterado.getFecha());
+                    turnoEnvio.setHora(turnoIterado.getHora());
+                    turnoEnvio.setMonto(turnoIterado.getMonto());
+
+                    turnoIterado.setFinalizado(true);
                 }
             }
         }

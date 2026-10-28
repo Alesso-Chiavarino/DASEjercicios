@@ -1,0 +1,18 @@
+BAD SMELL: Switch statements (estructura de agrupación condicional)
+REFACTORIZACIONES APLICADAS:
+Replace Conditional with Polymorphism: El metodo "calcularPago" de la clase "Empleado" tiene un estructura
+if/if-else para evaluar el tipo de empleado. Se reemplaza esta estructura condicional por polimorfismo.
+Para ello, se crean dos clases una "EmpleadoContratado" y "Empleado Efectivo" para implementar el método
+"calcularPago" con la lógica que corresponda. Como la clase "Empleado" no puede determinar un comportamiento
+por defecto se hace el método abstracto.
+El atributo "tipo" deja de ser requerido por lo que se elimina, modificando el constructor de las clases.
+
+BAD SMELL: Refused bequest (legado rechazado):
+REFACTORIZACIONES APLICADAS:
+Push Down Field: La clase "EmpleadoContratado" hereda el atributo "salarioBase" de la clase "Empleado" pero este
+atributo solo es válido para un empleado efectivo. Lo mismo sucede en la clase "EmpleadoEfectivo" con los
+atributos "horasTrabajadas" y "tarifaPorHora" que valen para un empleado contratado.
+Se realiza un push down field del atributo "salarioBase" a la clase "EmpleadoEfectivo" y de los atributos
+"horasTrabajadas" y "tarifaPorHora" a la clase "EmpleadoContratado".
+A su vez, se cambia el constructor de la superclase que pasa a recibir solo el nombre del empleado y se cambian
+los constructores de las subclases para que cada una reciba los parámetros que correspondan.
