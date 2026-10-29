@@ -1,0 +1,2 @@
+Long Method: metodo main es enorme, se encarga de muchas cosas, extract method se usó.
+Duplicated Code: el metodo para mostrar el tablero esta duplicado, se creó el metodo mostrarTablero
