@@ -1,0 +1,7 @@
+Cheque N°1 de Ferretería El Tornillo a Proveedor Bulonera SA por $60000.0
+Cheque rechazado a Ferretería El Tornillo: fondos insuficientes
+¿Ana pudo extraer $80000? false
+Cierre de mes - Banco de Córdoba
+  Mantenimiento cobrado a Ferretería El Tornillo: $3700.0
+Ferretería El Tornillo | Saldo: $-13700.0 | Descubierto: $20000.0 | Cheques emitidos: 1
+Ana Gómez | Saldo: $71400.0 | Tasa mensual: 2.0%

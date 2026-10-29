@@ -1,0 +1,29 @@
+------ FARMACIA DEL CENTRO ------
+Ibuprofeno 400 x2
+Subtotal: $7000.0
+Cobertura PAMI (jubilados): -$4900.0
+TOTAL: $2100.0
+-------------------------
+------ FARMACIA DEL CENTRO ------
+Amoxicilina 500 x2
+Subtotal: $12400.0
+Cobertura OSDE: -$4960.0
+TOTAL: $7440.0
+-------------------------
+ALERTA: quedan 4 unidades de Amoxicilina 500
+Venta rechazada: Losartán 50 requiere receta
+------ FARMACIA DEL CENTRO ------
+Ibuprofeno 400 x1
+Subtotal: $3500.0
+TOTAL: $3500.0
+-------------------------
+Venta rechazada: stock insuficiente de Amoxicilina 500
+Stock repuesto: Amoxicilina 500 -> 14 unidades
+===== REPORTE DEL DÍA - Farmacia del Centro =====
+Ventas: 3 (5 unidades)
+Recaudado: $13040.0
+A reclamar a obras sociales: $9860.0
+medicamento;cantidad;obra_social;importe
+Ibuprofeno 400;2;PAMI;2100.0
+Amoxicilina 500;2;OSDE;7440.0
+Ibuprofeno 400;1;PARTICULAR;3500.0

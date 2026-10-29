@@ -1,0 +1,12 @@
+Póliza N°1001 emitida: Auto AE111AA (con GNC)
+Póliza N°1002 emitida: Auto AF222BB
+Póliza N°1003 emitida: Moto A123BCD 300cc
+Póliza N°1004 emitida: Moto A456EFG 110cc
+Póliza N°1005 emitida: Camión AD333CC de 12 t
+===== Cartera de Seguros La Docta =====
+N°1001 - Auto AE111AA (con GNC) - prima: $558000.0
+N°1002 - Auto AF222BB - prima: $750000.0
+N°1003 - Moto A123BCD 300cc - prima: $212000.0
+N°1004 - Moto A456EFG 110cc - prima: $125000.0
+N°1005 - Camión AD333CC de 12 t - prima: $1608000.0
+Total primas: $3253000.0

@@ -1,0 +1,7 @@
+[Correo Nueva Córdoba] Despachado E001 para Ana Gómez - entrega estimada: 3/11/2026
+[Correo Nueva Córdoba] No se despacha en fin de semana: E002
+[Correo Nueva Córdoba] Despachado E003 para Carla Ruiz - entrega estimada: 9/11/2026
+[Correo Nueva Córdoba] Reclamo por E001: No llegó - responder antes del 9/11/2026 (el envío todavía está en plazo)
+[Correo Nueva Córdoba] Reclamo por E003: Paquete dañado - responder antes del 20/11/2026
+[Correo Nueva Córdoba] Entregas estimadas para la semana del 2/11/2026:
+  E001 -> 3/11/2026

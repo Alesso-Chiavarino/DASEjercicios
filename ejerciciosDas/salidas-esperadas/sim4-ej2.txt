@@ -1,0 +1,8 @@
+[EMAIL] Para: ana@mail.com | Asunto: Recordatorio | Tu turno con el dentista es mañana a las 10:00
+[SMS] 3515443322: Tu turno con el dentista es mañana a las...
+[WHATSAPP] Hola Carla (3517889900)! Tu turno con el dentista es mañana a las 10:00
+No se pudo enviar SMS a Diego
+[EMAIL] Para: ana@mail.com | Asunto: Promoción especial | PROMO: 20% de descuento en blanqueamiento
+[SMS] 3515443322: PROMO: 20% de descuento en blanqueamient...
+[WHATSAPP] Hola Carla (3517889900)! PROMO: 20% de descuento en blanqueamiento
+No se pudo enviar SMS a Diego

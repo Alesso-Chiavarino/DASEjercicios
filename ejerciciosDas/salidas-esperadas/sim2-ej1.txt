@@ -1,0 +1,14 @@
+Total cotizado: $472500.0
+Cotización Hotel Sierras - habitación DOBLE
+Noches: 7 x $75000.0
+Descuento por estadía larga: $52500.0
+
+Reserva confirmada para Lucía Fernández (DNI 33222111): habitación 101 - $472500.0
+La habitación 101 no está disponible para Martín López
+Reserva confirmada para Martín López (DNI 29888777): habitación 205 - $220000.0
+Email inválido para Sofía Paz: sofia.mail.com
+Reserva confirmada para Lucía Fernández (DNI 33222111): habitación 110 - $80000.0
+
+Reservas de Lucía Fernández <lucia@mail.com>:
+  Habitación 101 (DOBLE) del 2026-12-20 al 2026-12-27 - $472500.0
+  Habitación 110 (SIMPLE) del 2027-01-10 al 2027-01-12 - $80000.0

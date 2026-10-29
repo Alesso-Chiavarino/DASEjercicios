@@ -1,0 +1,31 @@
+==============================================
+RESUMEN DE ALQUILERES - RentCar Córdoba
+==============================================
+Cliente: Ana Gómez (DNI 30111222)
+Domicilio: Av. Colón 1250, Córdoba, Córdoba
+Auto: VW Gol [AB123CD]
+Días: 3 - Km recorridos: 450
+Incluye seguro
+Total: $129000.0
+----------------------------------------------
+Cliente: Bruno Díaz (DNI 28999888)
+Domicilio: San Martín 450, Rosario, Santa Fe
+Auto: Toyota Corolla [AC456EF]
+Días: 5 - Km recorridos: 1400
+Km excedidos: 400
+Incluye entrega fuera de la provincia
+Total: $385000.0
+----------------------------------------------
+Cliente: Carla Ruiz (DNI 35444555)
+Domicilio: Belgrano 87, Villa Carlos Paz, Córdoba
+Auto: VW Gol [AB123CD]
+Días: 2 - Km recorridos: 520
+Km excedidos: 120
+Incluye seguro
+Total: $104000.0
+----------------------------------------------
+Cantidad de alquileres: 3
+Total facturado: $618000.0
+Promedio por alquiler: $206000.0
+Alquiler más caro: Bruno Díaz ($385000.0)
+==============================================
