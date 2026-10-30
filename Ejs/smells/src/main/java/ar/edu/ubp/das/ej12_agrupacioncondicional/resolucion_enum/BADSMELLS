@@ -1,0 +1,34 @@
+Otra forma de resolver el ej12: con un enum en vez de subclases.
+
+Smell: Estructuras de agrupación condicional (Switch Statements)
+Dónde: Entrada.calcularPrecio y Entrada.describirBeneficio (switch sobre tipo) y
+Entrada.requiereDocumento (condición sobre tipo). El atributo String tipo es un
+código de tipo que decide el comportamiento.
+
+Por qué es un problema: la misma decisión según el tipo está repetida en tres
+métodos. Para agregar un tipo nuevo hay que tocar todos los switch. Además el
+String acepta cualquier texto: "Vip" compila y recién falla en ejecución.
+
+Refactorización: Replace Type Code with State/Strategy
+  - El String tipo se reemplaza por el enum TipoEntrada, con una constante por
+    cada valor posible: GENERAL, ESTUDIANTE, JUBILADO y VIP.
+  - Entrada guarda un TipoEntrada y le delega el comportamiento: cada constante
+    del enum es el objeto que sabe cómo calcular el precio de ese tipo.
+
+Refactorización: Replace Conditional with Polymorphism
+  - calcularPrecio es abstracto en el enum y cada constante lo implementa con la
+    cuenta de su case.
+  - describirBeneficio y requiereDocumento no cambian de lógica, solo de dato:
+    pasan a ser atributos que cada constante recibe en su constructor.
+  - Los default que tiraban IllegalArgumentException desaparecen: el compilador
+    no deja crear una Entrada con un tipo que no exista.
+  - Run: new Entrada("Dune", "ESTUDIANTE") pasa a
+    new Entrada("Dune", TipoEntrada.ESTUDIANTE).
+
+Si el tipo no decidiera nada (solo se guardara y se imprimiera), el enum sería
+solo la lista de constantes y la refactorización se llamaría Replace Type Code
+with Class.
+
+Cómo se preservó la salida: Boleteria imprime entrada.getTipo(); un enum se
+imprime con el nombre de su constante, así que sigue saliendo "GENERAL",
+"ESTUDIANTE"... Las cuentas son las mismas de cada case.

@@ -75,6 +75,8 @@ Para comprobar que la resolución da la misma salida que el original:
 
 `./verificar.sh 07`, sin el segundo argumento, sigue verificando tu versión y no compila la carpeta `resolucion`.
 
+El ej12 tiene una segunda resolución en `resolucion_enum/`, que reemplaza el `String tipo` por un enum en vez de subclases. Sirve de ejemplo de cómo se escribe un enum: constantes, constructor con datos y un método que cada constante implementa a su manera. Se verifica con `./verificar.sh 12 resolucion_enum`.
+
 Para volver un ejercicio a su versión original: `git checkout -- src/main/java/ar/edu/ubp/das/ej07_envidiadecaracteristicas`.
 
 ## Ojo con el comportamiento

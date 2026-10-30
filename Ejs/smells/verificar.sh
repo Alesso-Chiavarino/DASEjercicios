@@ -2,6 +2,7 @@
 # Compara la salida de tu versión (o de la resolución) con la del código original.
 # Uso: ./verificar.sh <ejercicio>              ej: ./verificar.sh 07
 #      ./verificar.sh <ejercicio> resolucion   ej: ./verificar.sh 07 resolucion
+#      (el ej12 tiene además resolucion_enum:  ./verificar.sh 12 resolucion_enum)
 
 uso() {
     echo "Uso: ./verificar.sh <ejercicio>              (ej: ./verificar.sh 07)"
@@ -24,17 +25,18 @@ nombre=$(basename "$paquete")
 esperada="salidas-esperadas/$nombre.txt"
 
 if [ $# -eq 2 ]; then
-    if [ "$2" != "resolucion" ]; then
-        uso
-    fi
-    if [ ! -d "$paquete/resolucion" ]; then
-        echo "El ejercicio $num todavía no tiene resolución"
+    case "$2" in
+        resolucion*) ;;
+        *) uso ;;
+    esac
+    if [ ! -d "$paquete/$2" ]; then
+        echo "El ejercicio $num no tiene la carpeta $2"
         exit 1
     fi
-    fuentes=$(find "$paquete/resolucion" -name '*.java')
-    clase="ar.edu.ubp.das.$nombre.resolucion.Run"
+    fuentes=$(find "$paquete/$2" -name '*.java')
+    clase="ar.edu.ubp.das.$nombre.$2.Run"
 else
-    fuentes=$(find "$paquete" -name '*.java' -not -path '*/resolucion/*')
+    fuentes=$(find "$paquete" -name '*.java' -not -path '*/resolucion*')
     clase="ar.edu.ubp.das.$nombre.Run"
 fi
 
