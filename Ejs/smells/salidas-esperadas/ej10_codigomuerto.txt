@@ -1,0 +1,6 @@
+Rayuela prestado a Juan
+Rayuela ya está prestado
+No existe el libro El Aleph
+Ficciones prestado a María
+Rayuela devuelto. Multa: $0.0
+Ficciones devuelto. Multa: $2000.0

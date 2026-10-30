@@ -1,0 +1,3 @@
+Cobrando pedido de Carla: $18450.0
+Cobrando pedido de Martín: $15600.0
+Total recaudado: $34050.0

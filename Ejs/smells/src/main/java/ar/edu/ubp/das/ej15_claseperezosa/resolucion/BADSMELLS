@@ -1,0 +1,27 @@
+Smell: Clase perezosa (Lazy Class)
+Dónde: Cliente (extends Persona sin agregar nada), CalculadoraIva y
+FormateadorPrecio (un método de una línea cada una).
+
+Por qué es un problema: según el apunte, cada clase tiene un costo de
+mantenimiento (entenderla, probarla, documentarla). Estas tres no hacen lo
+suficiente para justificarlo: Cliente es idéntica a Persona, y las otras dos son
+una multiplicación y una concatenación.
+
+Refactorización: Collapse Hierarchy
+  - Cliente y Persona se juntan en una sola clase. Quedó Cliente (con nombre,
+    dni, el constructor y los getters que estaban en Persona) porque es el nombre
+    que usan Facturador y el main, y se borró Persona.
+
+Refactorización: Inline Class
+  - CalculadoraIva.calcular pasa a Facturador como método privado
+    calcularIva(neto).
+  - FormateadorPrecio.formatear pasa a Facturador como método privado
+    formatear(precio).
+  - Se borran las dos clases y los atributos calculadoraIva y formateador de
+    Facturador.
+
+Otras opciones del apunte: la tabla trae solo estas dos. Si Cliente tuviera algo
+propio (por ejemplo un número de cliente), o el IVA tuviera reglas de verdad
+(alícuotas distintas), ahí sí convendría dejar esas clases.
+Cómo se preservó la salida: calcularIva hace la misma cuenta (neto * 0.21) y
+formatear la misma concatenación ("$" + precio).

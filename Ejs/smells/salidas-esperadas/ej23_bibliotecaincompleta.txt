@@ -1,0 +1,6 @@
+Cliente: María - Tarjeta: ************1234
+Atendió: González (legajo L-0042)
+Monto: $15000.0 - CBU destino: ******************4567
+Cliente: Rodrigo - Tarjeta: ************9876
+Atendió: González (legajo L-0042)
+Monto: $4200.0 - CBU destino: ******************5201

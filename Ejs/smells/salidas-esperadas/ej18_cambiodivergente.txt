@@ -1,0 +1,10 @@
+Total: $109725.0
+numero;cliente;producto;cantidad;precio
+101;Ferretería López;Taladro;2;48000.0
+101;Ferretería López;Mechas x10;3;6500.0
+{"numero": 101, "cliente": "Ferretería López", "total": 109725.0}
+INSERT INTO pedidos (numero, cliente, total) VALUES (101, 'Ferretería López', 109725.0);
+INSERT INTO items (pedido, producto, cantidad) VALUES (101, 'Taladro', 2);
+INSERT INTO items (pedido, producto, cantidad) VALUES (101, 'Mechas x10', 3);
+DELETE FROM items WHERE pedido = 101;
+DELETE FROM pedidos WHERE numero = 101;

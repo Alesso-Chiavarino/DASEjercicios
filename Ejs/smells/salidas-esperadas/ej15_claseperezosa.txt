@@ -1,0 +1,4 @@
+Factura para Ana Torres (DNI 30111222)
+  Neto: $10000.0 - IVA: $2100.0 - Total: $12100.0
+Factura para Hugo Lima (DNI 27444555)
+  Neto: $58000.0 - IVA: $12180.0 - Total: $70180.0

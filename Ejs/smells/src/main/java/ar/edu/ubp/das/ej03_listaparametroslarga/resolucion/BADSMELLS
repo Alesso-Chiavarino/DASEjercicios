@@ -1,0 +1,27 @@
+Smell: Lista de parámetros larga (Long Parameter List)
+Dónde: Inscripciones.inscribir(nombre, apellido, dni, curso, dia, mes, anio, arancel,
+       porcentajeBeca): 9 parámetros.
+Por qué es un problema: un método con tantos parámetros es difícil de entender y de
+llamar (es fácil confundir el orden de dia/mes/anio) y aumenta el acoplamiento: si
+cambia un dato del alumno hay que cambiar la firma y todas las llamadas.
+
+Refactorización: Preserve Whole Object
+  - En vez de recibir nombre, apellido y dni sacados de un Alumno, inscribir() recibe
+    el Alumno entero y le pide los datos adentro del método.
+  - El main pasa juan, sofia o marcos en lugar de sus tres getters.
+
+Refactorización: Replace Parameter with Method
+  - El main llamaba a obtenerPorcentajeBeca() y le pasaba el resultado a inscribir(),
+    pero Inscripciones puede calcularlo solo. Se borró el parámetro porcentajeBeca e
+    inscribir() llama a obtenerPorcentajeBeca(alumno.getDni()).
+
+Refactorización: Introduce Parameter Object
+  - dia, mes y anio siempre van juntos: se reemplazaron por un LocalDate inicio
+    (no hizo falta crear una clase nueva, Java ya la tiene).
+
+Resultado: inscribir(Alumno alumno, String curso, LocalDate inicio, double arancel).
+
+Otras opciones del apunte: Introduce Parameter Object con una clase Curso (nombre,
+fecha de inicio, arancel), si esos tres datos también viajaran juntos a otros métodos.
+Cómo se preservó la salida: la fecha se imprime con getDayOfMonth() + "/" +
+getMonthValue() + "/" + getYear(), así sigue saliendo 3/3/2025 y no 2025-03-03.

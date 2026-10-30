@@ -1,0 +1,9 @@
+Inscripto: Tomás
+Inscripto: Julieta
+De: secretaria@escuela.edu.ar | Para: tomas@mail.com | Boletín
+  Promedio: 8.0 - APROBADO
+De: secretaria@escuela.edu.ar | Para: juli@mail.com | Boletín
+  Promedio: 5.0 - DESAPROBADO
+De: secretaria@escuela.edu.ar | Para: juli@mail.com | Aviso de deuda
+  Adeuda $25000.0
+Recaudado: $65000.0 - Mails enviados: 3

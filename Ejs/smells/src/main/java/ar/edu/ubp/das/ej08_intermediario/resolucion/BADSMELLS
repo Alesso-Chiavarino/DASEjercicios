@@ -1,0 +1,19 @@
+Smell: Intermediario (Middleman)
+Dónde: GestorProfesor: obtenerNombre(), obtenerEmail(), actualizarEmail() y
+       obtenerHorasSemanales() solo llaman al método equivalente de Profesor.
+       Lo usan Liquidacion.calcularHonorarios() y el main.
+Por qué es un problema: GestorProfesor no hace nada por sí misma, todo lo delega en
+Profesor. Es un puente innecesario: agrega una clase que hay que mantener y, cada vez
+que Profesor gana un método, hay que agregar otro delegador en el gestor.
+
+Refactorización: Remove Middleman
+  - Liquidacion.calcularHonorarios(Profesor profesor, double valorHora): trabaja con el
+    Profesor directamente (getHorasSemanales(), getNombre(), getEmail()).
+  - Run: crea los Profesor y los usa directo; actualizarEmail() pasó a ser
+    raul.setEmail(...).
+  - Se borró la clase GestorProfesor.
+
+Otras opciones del apunte: Inline Method, si solo algunos métodos del intermediario
+fueran simples delegaciones y el resto tuviera lógica propia (se reemplaza la llamada
+por el cuerpo y la clase se queda). Replace Delegation with Inheritance, si el gestor
+tuviera algo propio y conviniera que herede de Profesor en vez de delegar todo.

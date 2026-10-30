@@ -1,0 +1,35 @@
+Smell: Comentarios (Comments)
+Dónde: Estacionamiento.calcularTarifa
+
+Por qué es un problema: el método necesita un comentario por bloque para que se
+entienda; según el apunte, eso indica que el código no es claro por sí mismo.
+Además los comentarios no se compilan ni se prueban, así que se desactualizan: el
+que dice "cada fracción cuesta $250" miente, porque el código cobra 300.
+
+Refactorización: Extract Method
+  - "calculamos cuántas fracciones de 15 minutos hay (una fracción empezada se
+    cobra entera)" pasa a calcularFracciones(minutos).
+  - "tope diario: nunca se cobra más de $12000" pasa a aplicarTopeDiario(tarifa).
+
+Refactorización: Replace Magic Number with Symbolic Constant
+  - 10, 15, 300 y 12000 pasan a MINUTOS_TOLERANCIA, MINUTOS_POR_FRACCION,
+    PRECIO_POR_FRACCION y TOPE_DIARIO. Con eso, "si estuvo 10 minutos o menos no
+    se cobra (tolerancia)" ya se lee en if (minutos <= MINUTOS_TOLERANCIA).
+
+Refactorización: Introduce Assertion
+  - "OJO: minutos nunca puede ser negativo, el que llama tiene que controlarlo"
+    pasa a assert minutos >= 0. La precondición queda escrita en el código y se
+    chequea si se corre con -ea.
+
+Se borraron sin reemplazo "calcula la tarifa" y "las motos pagan la mitad": solo
+repetían lo que ya dice el código (calcularTarifa, if (esMoto) ... / 2).
+
+El comentario mentiroso: se dejó PRECIO_POR_FRACCION = 300 porque es lo que hace
+el programa (poner 250 cambiaría la salida). Muestra el peligro de los
+comentarios: el código cambió, el comentario quedó viejo y nadie se dio cuenta.
+
+Otras opciones del apunte: la tabla trae Extract Method e Introduce Assertion. Un
+comentario que explica el porqué de una regla de negocio puede quedar; acá con
+los nombres alcanzó y no quedó ninguno.
+Cómo se preservó la salida: el assert no cambia nada (Java lo ignora sin -ea) y
+las cuentas son las mismas, en el mismo orden.

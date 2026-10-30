@@ -1,0 +1,9 @@
+Venta: 3 x Alfajor = $3600.0
+Stock insuficiente de Gaseosa (quedan 5)
+No existe el producto Caramelo
+Venta: 4 x Chicle = $1200.0
+Producto más caro: Gaseosa a $2500.0
+Stock actual:
+  Alfajor: 7 u. a $1200.0
+  Gaseosa: 5 u. a $2500.0
+  Chicle: 16 u. a $300.0

@@ -1,0 +1,27 @@
+Smell: Biblioteca de clases incompleta (Incomplete Library Class)
+Dónde: String no tiene un método para capitalizar ni para enmascarar. Por eso la lógica está
+  escrita a mano y repetida:
+  - Capitalizar: Cliente.getNombreFormateado y Empleado.getApellidoFormateado.
+  - Enmascarar: Cliente.getTarjetaOculta y Comprobante.imprimir (con el CBU).
+Por qué es un problema: la clase de la biblioteca no ofrece lo que necesitamos, y no la podemos
+  modificar: String es de Java y además es final. Entonces cada clase que lo necesita repite
+  el código. Un cambio, por ejemplo mostrar 6 dígitos en vez de 4, hay que hacerlo en varios
+  lugares.
+
+Refactorización: Introduce Foreign Method
+  - Se escribieron los métodos que le faltan a String como métodos que reciben el String por
+    parámetro: capitalizar(String texto) y enmascarar(String texto).
+  - Como los usan tres clases, en vez de poner el método en cada una se juntaron en una sola
+    clase, UtilidadesTexto, como métodos static. Si no, se volvía a duplicar el código.
+  - Cliente, Empleado y Comprobante ahora llaman a UtilidadesTexto.capitalizar(...) y
+    UtilidadesTexto.enmascarar(...). Ninguna tiene la lógica de String escrita a mano.
+  - Run quedó igual.
+  De paso se eliminó el Código duplicado (Duplicated Code) que había entre las tres clases.
+
+Otras opciones del apunte: Introduce Local Extension. El apunte la describe heredando de la
+  clase de la biblioteca, pero String es final y no se puede heredar. Habría que hacer un
+  envoltorio: una clase Texto con un atributo private String y los métodos capitalizar() y
+  enmascarar(), y Cliente y Empleado guardarían un Texto en vez de un String. Conviene
+  cuando faltan muchos métodos o se usan en todo el sistema. Para dos métodos chicos como
+  acá, Introduce Foreign Method es más simple, porque no obliga a convertir de String a Texto
+  y de vuelta.

@@ -1,0 +1,30 @@
+Smell: Cambio en cadena (Shotgun Surgery)
+Dónde: Factura, Presupuesto y NotaDeCredito. Las tres repiten la constante IVA = 0.21, el
+  método privado redondear(), la cuenta redondear(neto * IVA) y el texto "21%" en imprimir().
+Por qué es un problema: un cambio chico, como que cambie la alícuota del IVA o la forma de
+  redondear, obliga a tocar las tres clases (y a cualquier comprobante nuevo que se agregue).
+  El dato y el comportamiento están dispersos por el sistema, y si te olvidás de una clase
+  queda un comprobante con el IVA viejo.
+
+Refactorización: Move Field + Move Method, juntando todo en una clase nueva CalculadoraIva
+  - Move Field: la constante IVA pasó de las tres clases a CalculadoraIva (privada). Al lado
+    quedó la constante PORCENTAJE = "21%", porque el texto también cambia con la alícuota.
+  - Move Method: redondear() pasó a CalculadoraIva como método static. La cuenta del IVA,
+    que estaba copiada en los tres imprimir(), quedó en calcularIva(neto).
+  - Se agregó getPorcentaje() para que los tres comprobantes impriman el texto desde ahí.
+  - Factura, Presupuesto y NotaDeCredito ya no tienen ni la constante ni redondear(): llaman
+    a CalculadoraIva.calcularIva(...), CalculadoraIva.redondear(...) y getPorcentaje().
+  - Run quedó igual.
+  Ahora un cambio de alícuota o de redondeo se hace en un solo archivo.
+
+Ojo con los nombres: la tabla del apunte da Move Method, Move Field e Inline Class para este
+  smell. En el ejemplo de clase de la profe (ejemplo04) lo mismo se resolvió creando clases
+  nuevas y lo llamó Extract Class. Como acá también se creó una clase, en el parcial conviene
+  nombrar las dos: Move Field + Move Method hacia una clase nueva (Extract Class).
+
+Otras opciones del apunte: Inline Class conviene cuando lo que está disperso vive en varias
+  clases chicas que se pueden fusionar en una. Acá no aplica: Factura, Presupuesto y
+  NotaDeCredito son conceptos distintos.
+Cómo se preservó la salida: las cuentas se hacen en el mismo orden que antes: primero
+  redondear(neto * IVA) y después redondear(neto + iva). Así los double impresos no cambian
+  (por ejemplo $2592.59 y $14938.26).

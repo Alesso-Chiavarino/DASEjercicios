@@ -1,0 +1,24 @@
+Smell: Envidia de características (Feature Envy)
+Dónde: Caja.calcularTotalProductos(pedido) y Caja.calcularEnvio(pedido).
+Por qué es un problema: esos métodos usan solo datos de Pedido (getLineas(),
+isClienteFrecuente(), getDistanciaKm()) y de LineaPedido (getCantidad(),
+getPrecioUnitario()), y nada de Caja. Acceden más a otra clase que a la propia, lo que
+indica que están en la clase incorrecta y bajan la cohesión.
+
+Refactorización: Move Method
+  - LineaPedido: nuevo calcularSubtotal() (cantidad x precioUnitario), porque esos
+    datos son de la línea.
+  - Pedido: se movieron calcularTotalProductos() (suma los subtotales de sus líneas y
+    aplica el 10% al cliente frecuente) y calcularEnvio() (gratis hasta 2 km, si no
+    $400 por km). Ya no reciben el pedido por parámetro: usan sus propios atributos.
+  - Caja: se borraron los dos métodos. Se quedó con lo que es suyo: recaudado,
+    cobrar() y cerrarCaja().
+
+Refactorización: Extract Method
+  - Pedido.calcularTotal() = calcularTotalProductos() + calcularEnvio(). Así Caja.cobrar()
+    solo le pide el total al pedido.
+
+Otras opciones del apunte: Move Field, si Caja tuviera atributos que en realidad
+describen al pedido (acá no los hay).
+Cómo se preservó la salida: las cuentas son las mismas y en el mismo orden (primero se
+suman las líneas, después el descuento, después se suma el envío).

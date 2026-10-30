@@ -1,0 +1,25 @@
+Smell: Atributo temporal (Temporary Field)
+Dónde: Liquidador: horasExtraTemporales, valorHoraExtraTemporal, motivoBonoTemporal y
+       montoBonoTemporal, junto con prepararHorasExtra(), prepararBono() y limpiar().
+Por qué es un problema: son atributos que solo usa liquidar() y no forman parte del
+estado permanente del Liquidador. Hay que acordarse de "preparar" antes y "limpiar"
+después; si no, los datos de una liquidación se cuelan en la siguiente (es lo que pasa
+en el caso 3 del main original: a Luis se le pagan las horas extra de Ana).
+
+Refactorización: Add Parameter
+  - Liquidador: se borraron los cuatro atributos temporales y los métodos
+    prepararHorasExtra(), prepararBono() y limpiar().
+  - Nuevo liquidar(empleado, horasExtra, valorHoraExtra, motivoBono, montoBono) con el
+    cuerpo del viejo, usando los parámetros en lugar de los atributos.
+  - El viejo liquidar(empleado) llama al nuevo con null en todo (sin extras).
+  - Se agregaron liquidar(empleado, horas, valorHora) y liquidar(empleado, motivo, monto),
+    que llaman al nuevo con null en lo que no corresponde.
+  - Run: cada caso pasa sus datos en la llamada.
+
+Otras opciones del apunte: la tabla propone Extract Class (pasar las horas extra y el
+bono a objetos propios que se envían como parámetro) e Introduce Null Object (un bono
+"vacío" que suma 0, para no preguntar por null). Valen si esos datos tuvieran más lógica.
+Cómo se preservó la salida: en el main original las horas extra del caso 2 quedaban
+cargadas y se aplicaban también al caso 3. Para dar los mismos totales, el caso 3 ahora
+pasa explícitamente 10 horas a $3000. Se mantuvieron Integer/Double con null para que
+la condición sea la misma que antes (dato cargado o no).

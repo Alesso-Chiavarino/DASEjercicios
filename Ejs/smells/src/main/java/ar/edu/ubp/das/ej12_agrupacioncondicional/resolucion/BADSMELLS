@@ -1,0 +1,30 @@
+Smell: Estructuras de agrupación condicional (Switch Statements)
+Dónde: Entrada.calcularPrecio y Entrada.describirBeneficio (switch sobre tipo) y
+Entrada.requiereDocumento (condición sobre tipo). El atributo String tipo es un
+código de tipo que decide el comportamiento.
+
+Por qué es un problema: la misma decisión según el tipo está repetida en tres
+métodos. Para agregar un tipo nuevo (por ejemplo MENOR) hay que tocar todos los
+switch y condiciones, lo que rompe el principio Abierto/Cerrado. Además un String
+mal escrito ("Vip") recién falla en ejecución, en el default.
+
+Refactorización: Replace Type Code with Subclasses
+  - Entrada pasa a ser abstracta y hay una subclase por cada valor del tipo:
+    EntradaGeneral, EntradaEstudiante, EntradaJubilado y EntradaVip.
+  - Se borra el atributo tipo. getTipo() queda abstracto y cada subclase
+    devuelve su texto ("GENERAL", "ESTUDIANTE"...), porque Boleteria lo imprime.
+
+Refactorización: Replace Conditional with Polymorphism
+  - Cada case pasa al método de la subclase que le corresponde: calcularPrecio,
+    describirBeneficio y requiereDocumento son abstractos en Entrada y cada
+    subclase los implementa.
+  - Los default que tiraban IllegalArgumentException desaparecen: ya no se puede
+    crear una entrada de un tipo desconocido.
+  - Boleteria no cambia: le habla a Entrada y el polimorfismo elige el cálculo.
+  - Run: new Entrada("Dune", "ESTUDIANTE") pasa a new EntradaEstudiante("Dune").
+
+Otras opciones del apunte: Replace Type Code with State/Strategy, si el tipo
+pudiera cambiar durante la vida de la entrada (por ejemplo, pasar de GENERAL a
+VIP) o si Entrada ya tuviera subclases por otro motivo.
+Cómo se preservó la salida: cada subclase hace la misma cuenta que su case
+(precioBase * 0.70, precioBase * 1.5 + 2000, etc.).

@@ -1,0 +1,6 @@
+FACTURA - Comercial Norte
+  Neto: $12345.67 | IVA (21%): $2592.59 | Total: $14938.26
+PRESUPUESTO - Estudio Ríos (válido 15 días)
+  Neto: $80000.0 | IVA (21%): $16800.0 | Total: $96800.0
+NOTA DE CRÉDITO - Comercial Norte
+  Se devuelve: $3024.99 (IVA 21% incluido)

@@ -1,0 +1,14 @@
+Caso 1: sueldo básico
+Liquidación de Ana: $900000.0
+
+Caso 2: con horas extra
+  Horas extra: 10 x $3000.0 = $30000.0
+Liquidación de Ana: $930000.0
+
+Caso 3: otro empleado (las horas extra quedaron cargadas)
+  Horas extra: 10 x $3000.0 = $30000.0
+Liquidación de Luis: $780000.0
+
+Caso 4: limpiamos y cargamos un bono
+  Bono por presentismo: $20000.0
+Liquidación de Luis: $770000.0

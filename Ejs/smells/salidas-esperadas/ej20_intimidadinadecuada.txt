@@ -1,0 +1,9 @@
+Juan eligió a Paula Vera como médico de cabecera
+Rosa eligió a Paula Vera como médico de cabecera
+Historia clínica de Juan (cabecera: Paula Vera)
+  Clínica: gripe (Dr/a. Paula Vera)
+  Traumatología: esguince de tobillo (Dr/a. Diego Paz)
+Historia clínica de Rosa (cabecera: Paula Vera)
+  Clínica: control anual (Dr/a. Paula Vera)
+Paula Vera: 2 pacientes, 2 consultas en el mes
+Diego Paz: 0 pacientes, 1 consultas en el mes

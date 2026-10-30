@@ -1,0 +1,32 @@
+Smell: Generalidad especulativa (Speculative Generality)
+Dónde: interfaz Notificable (una sola implementación), clase abstracta
+ProcesadorBase (una sola subclase), ProcesadorReservas.procesarGenerico (dos
+parámetros que no se usan) y ProcesadorReservas.procesarGrupal (sin implementar).
+
+Por qué es un problema: todo eso se agregó "por si acaso" (SMS, torneos, reservas
+grupales) y hoy no se usa. Según el apunte, suma complejidad y hace el código más
+difícil de entender y probar; si no se usa, se elimina. Cuando llegue el
+requerimiento real, se agrega.
+
+Refactorización: Collapse Hierarchy
+  - Notificable / NotificadorEmail: se borra la interfaz y queda NotificadorEmail
+    (sin implements ni @Override).
+  - ProcesadorBase / ProcesadorReservas: el atributo notificador y el constructor
+    bajan a ProcesadorReservas y se borra ProcesadorBase. El atributo pasa de
+    protected Notificable a private NotificadorEmail.
+
+Refactorización: Remove Parameter
+  - procesarGenerico(reserva, modoAvanzado, formatoFuturo): modoAvanzado y
+    formatoFuturo no se usan en el cuerpo (el main pasaba false y null). Se sacan.
+
+Refactorización: Rename Method
+  - procesarGenerico pasa a procesar: "Generico" no dice nada de lo que hace, era
+    parte de la generalización.
+
+Además se borró procesarGrupal (nadie lo llama y solo tiraba
+UnsupportedOperationException) junto con el import de List, y con el código se
+fueron los comentarios "pensada para cuando..." y "por si en el futuro...".
+
+Otras opciones del apunte: Inline Class, si se considera que NotificadorEmail (un
+println) no justifica una clase; la dejé porque avisarle al cliente es otra
+responsabilidad. Si mañana aparece SMS, recién ahí se hace Extract Interface.

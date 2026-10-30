@@ -1,0 +1,25 @@
+Smell: Legado rechazado (Refused Bequest)
+Dónde: Historial extends ArrayList<String>
+
+Por qué es un problema: Historial hereda toda la interfaz de ArrayList (add en
+cualquier posición, set, clear, sort, removeAll, etc.) pero solo usa add, remove,
+get y size. El resto lo "rechaza", aunque igual le queda público: desde afuera se
+puede hacer historial.clear() o historial.add(0, "x") y romper el historial sin
+pasar por visitar/volver. La herencia no corresponde: un Historial no "es una"
+lista, "tiene" una lista de páginas.
+
+Refactorización: Replace Inheritance with Delegation
+  - Historial ya no extiende ArrayList. Tiene un atributo privado
+    List<String> paginas y le delega el trabajo.
+  - visitar, volver y paginaActual hacen lo mismo, pero llaman a paginas.add,
+    paginas.remove, paginas.get y paginas.size en vez de a los métodos heredados.
+  - Se agregó cantidadPaginas(), que delega en paginas.size(), porque el main
+    mostraba historial.size(). Es lo único que se expone de más.
+  - Run: historial.size() pasa a ser historial.cantidadPaginas().
+
+Otras opciones del apunte: para este smell la tabla trae solo Replace Inheritance
+with Delegation. En el ejemplo de clase la profe usó Push Down Field, pero eso
+sirve cuando la superclase es nuestra; ArrayList es de Java y no se puede tocar.
+
+Cómo se preservó la salida: cantidadPaginas() devuelve lo mismo que size(), así
+que sigue imprimiendo "Páginas en el historial: 2".

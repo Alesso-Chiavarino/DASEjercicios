@@ -1,0 +1,29 @@
+Smell: Método largo (Long Method)
+Dónde: Factura.imprimir()
+Por qué es un problema: un solo método arma el encabezado, recorre los items, calcula
+el subtotal, decide el descuento, calcula el IVA e imprime el total. Tiene demasiadas
+líneas y tareas mezcladas, así que es difícil de entender, mantener y reutilizar
+(por ejemplo, no hay forma de pedir el subtotal sin imprimir toda la factura).
+
+Refactorización: Extract Method
+  - Factura.imprimir() ahora solo llama, en orden, a imprimirEncabezado(),
+    imprimirItems(), imprimirDescuento() e imprimirTotal(). Cada uno imprime su bloque.
+  - calcularImporte(item): la cuenta cantidad x precio, que se usa al imprimir
+    cada item y al sumar el subtotal.
+
+Refactorización: Replace Temp with Query
+  - La variable temporal subtotal se reemplazó por la consulta calcularSubtotal(),
+    y descuento por calcularDescuento(). Así imprimirDescuento() e imprimirTotal()
+    pueden usarlos sin pasarse variables entre sí.
+
+Refactorización: Decompose Conditional
+  - La condición "subtotal > 50000 && items.size() >= 3" pasó a correspondeDescuento().
+  - condicionIva.equals("RI"), que estaba repetida, pasó a esResponsableInscripto().
+
+Item quedó igual: no es parte del smell.
+
+Otras opciones del apunte: Replace Method with Method Object, si las variables locales
+estuvieran tan entrelazadas que no se pudiera hacer Extract Method (acá no hizo falta).
+Cómo se preservó la salida: calcularSubtotal() suma los importes en el mismo orden que
+el for original, y descuento, neto, IVA y total se calculan con las mismas cuentas en
+el mismo orden. Recalcular el subtotal varias veces no cambia el resultado.

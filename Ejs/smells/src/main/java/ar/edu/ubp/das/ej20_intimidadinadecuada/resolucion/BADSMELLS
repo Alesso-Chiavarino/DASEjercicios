@@ -1,0 +1,31 @@
+Smell: Intimidad inadecuada (Inappropriate Intimacy)
+Dónde: los atributos de Medico y Paciente no son private (acceso de paquete) y se tocan entre
+  sí directamente:
+  - Medico.atender hace paciente.historiaClinica.add(...).
+  - Paciente.elegirMedicoDeCabecera hace medico.pacientes.add(this) y lee medico.nombre.
+  - Paciente.imprimirHistoria lee medicoDeCabecera.nombre.
+  - Run lee clinica.nombre, clinica.pacientes.size() y clinica.consultasDelMes.
+Por qué es un problema: cada clase se mete en los datos internos de la otra y viola el
+  encapsulamiento. Queda un acoplamiento muy fuerte: si Paciente cambia cómo guarda su
+  historia clínica, se rompe Medico, y cualquiera puede modificar la lista de pacientes de un
+  médico sin control.
+
+Refactorización 1: Encapsulate Field
+  - Todos los atributos de Medico y Paciente pasan a ser private. En el mismo paquete, el
+    acceso de paquete es igual que si fueran públicos.
+  - Solo se agregó el getter que hace falta: Medico.getNombre().
+
+Refactorización 2: Move Method (cada clase trabaja con sus propios datos)
+  - Paciente.agregarRegistro(registro): Paciente agrega a su historia. Medico.atender arma el
+    texto con sus datos (especialidad, nombre) y se lo pasa.
+  - Medico.imprimirResumen(): el armado de la línea de resumen se movió del main a Medico.
+
+Refactorización 3: Change Bidirectional Association to Unidirectional
+  - Medico tenía List<Paciente> pacientes pero nunca usaba nada de Paciente, solo el size().
+    Se reemplazó por un int cantidadPacientes con sumarPaciente(). La asociación queda en un
+    solo sentido: Paciente conoce a su medicoDeCabecera y Medico ya no guarda pacientes.
+
+Otras opciones del apunte: si el médico necesitara después recorrer sus pacientes, conviene
+  dejar la lista private con agregarPaciente(Paciente) (Encapsulate Collection), en lugar de
+  cambiar la asociación.
+  Replace Inheritance with Delegation y Hide Delegate no aplican: no hay herencia ni cadenas.

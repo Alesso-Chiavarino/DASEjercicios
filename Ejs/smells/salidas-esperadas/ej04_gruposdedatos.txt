@@ -1,0 +1,10 @@
+Envíos desde Depósito Central (Av. Colón 1200, Córdoba)
+Destinatario: Laura Gómez
+  Belgrano 350 - Córdoba (CP 5000)
+  Costo: $2400.0
+Destinatario: Pedro Sosa
+  San Martín 80 - Río Cuarto (CP 5800)
+  Costo: $11000.0
+Destinatario: Marta Ríos
+  Corrientes 1500 - Buenos Aires (CP 1043)
+  Costo: $9800.0

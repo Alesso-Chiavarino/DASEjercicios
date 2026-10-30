@@ -1,0 +1,33 @@
+Smell: Código muerto (Dead Code)
+Dónde: Biblioteca, Libro y LibroAntiguo
+
+Por qué es un problema: hay un import, atributos, una variable, un if, métodos,
+un parámetro y una clase entera que no se usan. Según el apunte, ese código suma
+ruido, complica el mantenimiento y confunde: el que lee cree que importa.
+
+Refactorización: eliminar lo que no se usa
+  - Biblioteca: import java.util.Map. No se usa Map en ningún lado.
+  - Biblioteca.ultimoSocio: se asigna en prestar() pero nunca se lee.
+  - Biblioteca.prestar(): la variable local intentos se declara y no se usa.
+  - Biblioteca.calcularMulta(): if (diasAtraso > 30 && diasAtraso < 10) nunca
+    puede dar true (ningún número es mayor a 30 y menor a 10 a la vez), así que
+    el return diasAtraso * 1000 no se ejecuta nunca.
+  - Biblioteca.calcularMultaVieja(): no la llama nadie.
+  - Libro.vecesPrestado: se incrementa en setPrestado() pero nunca se lee.
+  - Libro.getAutor(): no lo llama nadie. Sin el getter, el atributo autor solo
+    se escribe en el constructor y nunca se lee, así que también se borra.
+
+Refactorización: Remove Parameter
+  - Biblioteca.prestar(titulo, socio, notificarPorMail): notificarPorMail no se
+    usa en el cuerpo. Queda prestar(titulo, socio) y se corrigen las llamadas.
+  - Libro(titulo, autor): al borrar el atributo autor el parámetro queda sin
+    uso. Queda Libro(titulo) y en el main se sacan los autores.
+
+Refactorización: Collapse Hierarchy
+  - LibroAntiguo no se instancia en ningún lado: la jerarquía Libro/LibroAntiguo
+    se colapsa en Libro. Como anioEdicion y getAnioEdicion tampoco los usa nadie,
+    no hay nada que subir a Libro: se borra la subclase.
+
+Otras opciones del apunte: Inline Class, si hubiera una clase que se usa pero no
+hace casi nada (acá no hay). Ojo: borrar algo público solo es seguro si nadie de
+afuera lo usa; acá todo el programa está en el paquete.

@@ -1,0 +1,29 @@
+Smell: Obsesión primitiva (Primitive Obsession)
+Dónde: Kiosco: tres listas paralelas de primitivos (productos, precios, stocks) que se
+       relacionan por posición; y Kiosco.productoMasCaro(), que devuelve un String[]
+       con {nombre, precio}.
+Por qué es un problema: un producto es un concepto con datos y comportamiento propio,
+pero está representado con primitivos sueltos. La lógica (buscar por índice, controlar
+y descontar stock) queda dispersa en Kiosco, y si se desordena una lista se mezclan los
+datos. El String[] obliga a quien lo usa a saber que [0] es el nombre y [1] el precio,
+y convierte el precio a texto.
+
+Refactorización: Replace Data Value with Object / Extract Class
+  - Nueva clase Producto con nombre, precio y stock, y su comportamiento:
+    hayStock(cantidad) y descontar(cantidad).
+  - Kiosco: las tres listas se reemplazaron por una List<Producto>.
+    agregarProducto() crea el Producto.
+  - Kiosco.buscar(nombre) (privado) devuelve el Producto o null, en lugar de
+    indexOf() + get(i) en tres listas.
+  - vender() usa buscar(), hayStock() y descontar(); listarStock() recorre productos.
+
+Refactorización: Replace Array with Object
+  - productoMasCaro() devuelve el Producto en lugar de un String[]. El main usa
+    getNombre() y getPrecio().
+
+Otras opciones del apunte: Introduce Parameter Object, si agregarProducto() recibiera
+directamente un Producto ya armado (también valía).
+Cómo se preservó la salida: los dos mensajes de error salen en el mismo orden (primero
+"No existe", después "Stock insuficiente") y con return igual que antes. El precio del
+más caro antes se pasaba con String.valueOf() y ahora se concatena el double: los dos
+imprimen 2500.0. La lista conserva el orden de carga.

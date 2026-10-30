@@ -1,0 +1,27 @@
+Smell: Clase grande (Large Class)
+Dónde: SistemaEscuela. Tiene 8 atributos de cuatro temas distintos (alumnos; notas y
+  notaMinimaAprobacion; deudas, valorCuota y recaudado; emailRemitente y mailsEnviados)
+  y métodos de los cuatro temas mezclados.
+Por qué es un problema: la clase intenta manejar demasiadas responsabilidades (inscripción,
+  notas, cobranzas y mails) y viola el principio de responsabilidad única. Se vuelve difícil
+  de mantener y tiende a acumular lógica no relacionada.
+
+Refactorización: Extract Class (tres veces, una por responsabilidad)
+  - Calificaciones: se llevó notas y notaMinimaAprobacion, con cargarNota, calcularPromedio
+    y estaAprobado. Se agregó registrarAlumno(dni) para crear la lista vacía.
+  - Cobranzas: se llevó deudas, valorCuota y recaudado, con generarCuota, registrarPago y
+    tieneDeuda. Se agregaron registrarAlumno(dni), getDeuda(dni) y getRecaudado().
+  - Mensajeria: se llevó emailRemitente y mailsEnviados, con enviarMail y getMailsEnviados().
+    enviarMail ahora recibe el Alumno entero en vez del dni, porque Mensajeria no tiene el
+    mapa de alumnos.
+  - SistemaEscuela: se queda con el mapa de alumnos y una instancia de cada clase nueva.
+    Coordina lo que cruza temas: inscribir (da de alta en las dos clases), enviarBoletin
+    (notas + mail), enviarAvisosDeDeuda (deudas + mail) e imprimirResumen. cargarNota,
+    generarCuota y registrarPago solo delegan.
+  - Alumno y Run quedaron iguales.
+
+Otras opciones del apunte: el main podría usar Calificaciones y Cobranzas directamente y así
+  SistemaEscuela no tendría métodos que solo delegan. Extract Interface convendría si
+  distintos clientes usaran solo una parte de la clase (por ejemplo, tesorería solo la parte
+  de cobranzas). Extract Subclass no aplica: no hay atributos que se usen solo en ciertos
+  casos.

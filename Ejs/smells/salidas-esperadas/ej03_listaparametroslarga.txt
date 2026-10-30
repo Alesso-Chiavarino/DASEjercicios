@@ -1,0 +1,9 @@
+Inscripción de Pérez, Juan (DNI 40111222)
+  Curso: Java Inicial - inicia el 3/3/2025
+  Arancel: $80000.0 - Beca: 50.0% - A pagar: $40000.0
+Inscripción de Ruiz, Sofía (DNI 41555666)
+  Curso: Java Inicial - inicia el 3/3/2025
+  Arancel: $80000.0 - Beca: 0.0% - A pagar: $80000.0
+Inscripción de Díaz, Marcos (DNI 38999000)
+  Curso: Bases de Datos - inicia el 10/4/2025
+  Arancel: $95000.0 - Beca: 25.0% - A pagar: $71250.0

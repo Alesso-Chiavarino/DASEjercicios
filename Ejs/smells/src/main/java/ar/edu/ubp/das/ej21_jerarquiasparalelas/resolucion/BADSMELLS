@@ -1,0 +1,33 @@
+Smell: Jerarquías paralelas (Parallel Inheritance Hierarchies)
+Dónde: Curso / CursoPresencial / CursoVirtual crecen en paralelo con Certificado /
+  CertificadoPresencial / CertificadoVirtual. Instituto.certificar usa instanceof para elegir
+  el certificado, y cada Certificado castea el Curso a su subclase gemela.
+Por qué es un problema: cada vez que se crea un tipo de curso nuevo (por ejemplo CursoHibrido)
+  también hay que crear su CertificadoHibrido y agregar otra rama al if de Instituto. Las dos
+  jerarquías representan lo mismo dos veces, y cualquier cambio en una obliga a cambiar la
+  otra.
+
+Refactorización: Move Method
+  - Curso: se agregó el método abstracto emitirCertificado(String alumno).
+  - CertificadoPresencial.emitir se movió a CursoPresencial.emitirCertificado, y
+    CertificadoVirtual.emitir a CursoVirtual.emitirCertificado. Como ahora el método está en
+    el propio curso, ya no recibe el Curso por parámetro ni necesita castearlo: usa
+    getNombre(), getHoras() y su sede o plataforma directamente.
+  - Se borró toda la jerarquía Certificado (Certificado, CertificadoPresencial y
+    CertificadoVirtual).
+  - Instituto.certificar solo hace curso.emitirCertificado(alumno). Se fue el instanceof.
+  - getSede() y getPlataforma() se borraron porque solo los usaban los certificados y
+    quedaban como código muerto.
+  - Run quedó igual.
+  Ahora un curso nuevo es una sola clase que ya sabe emitir su certificado.
+
+Move Field no hizo falta porque los certificados no tenían atributos. Si hubieran tenido
+  alguno (por ejemplo, una firma distinta por tipo), se movía a la subclase de Curso
+  correspondiente antes de borrar la jerarquía.
+
+De paso: el if con instanceof de Instituto era una Estructura de agrupación condicional
+  (Switch Statements). Se resolvió solo, por polimorfismo.
+
+Otras opciones del apunte: la tabla solo da Move Method y Move Field. En el ejemplo de clase
+  (ejemplo11), en cambio, una jerarquía pasa a referenciar a la otra (Replace Inheritance
+  with Delegation). Eso conviene si los certificados tuvieran mucha lógica propia.

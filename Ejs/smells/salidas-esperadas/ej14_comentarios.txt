@@ -1,0 +1,5 @@
+Auto 8 min: $0.0
+Auto 15 min: $300.0
+Auto 50 min: $1200.0
+Moto 50 min: $600.0
+Auto 12 hs: $12000.0

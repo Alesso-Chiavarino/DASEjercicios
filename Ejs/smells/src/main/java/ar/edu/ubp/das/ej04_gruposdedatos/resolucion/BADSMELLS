@@ -1,0 +1,35 @@
+Smell: Grupos de datos (Data Clumps)
+Dónde: los atributos calle, numero, ciudad y codigoPostal se repiten en Cliente y en
+       Deposito, y viajan juntos como parámetros en Logistica.calcularCosto(ciudadOrigen,
+       codigoPostalOrigen, ciudadDestino, codigoPostalDestino, pesoKg) e
+       imprimirEtiqueta(nombre, calle, numero, ciudad, codigoPostal).
+Por qué es un problema: esos datos siempre aparecen juntos, lo que indica que están
+relacionados y deberían agruparse en una clase propia. Si mañana se agrega "provincia",
+hay que tocar dos clases, dos firmas y todas las llamadas.
+
+Refactorización: Extract Class
+  - Nueva clase Direccion con calle, numero, ciudad y codigoPostal.
+  - Cliente y Deposito ahora tienen nombre y un atributo Direccion (getDireccion()).
+
+Refactorización: Introduce Parameter Object
+  - Logistica.calcularCosto(Direccion origen, Direccion destino, double pesoKg).
+
+Refactorización: Preserve Whole Object
+  - Logistica.imprimirEtiqueta(Cliente cliente): recibe el cliente entero en lugar de
+    sus cinco getters.
+
+Smell secundario: Clase de datos (Data Class)
+Dónde: Cliente y Deposito originales: solo atributos y getters; la lógica sobre la
+       dirección estaba afuera, en Logistica y en el main.
+Refactorización: Move Method
+  - A Direccion: esMismaCiudad(otra), esMismaProvincia(otra) (primer dígito del CP),
+    getDescripcionCompleta() para la etiqueta y getDescripcionCorta() para el
+    encabezado del depósito. Así Direccion no nace como una nueva clase de datos.
+  - El comentario del CP en calcularCosto() ya no hace falta: lo dice el nombre
+    esMismaProvincia().
+
+Otras opciones del apunte: se usaron las tres de la tabla. Si el grupo solo viajara
+como parámetros (y no fuera atributo de ninguna clase), alcanzaba con Introduce
+Parameter Object.
+Cómo se preservó la salida: los costos se suman en el mismo orden (peso x 1200,
++5000, +3000) y los dos formatos de dirección son los mismos strings que antes.

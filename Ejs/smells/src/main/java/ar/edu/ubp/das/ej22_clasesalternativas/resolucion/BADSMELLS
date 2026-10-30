@@ -1,0 +1,34 @@
+Smell: Clases alternativas con diferentes interfaces (Alternative Classes with Different
+  Interfaces)
+Dónde: PagoEfectivo.cobrar(monto), PagoTarjeta.realizarPago(importe) y
+  PagoMercadoPago.procesarTransferencia(alias, valor). Las tres cobran un monto, pero con
+  nombres y parámetros distintos. Por eso Caja necesita tres métodos (cobrarEnEfectivo,
+  cobrarConTarjeta, cobrarConMercadoPago) que hacen lo mismo.
+Por qué es un problema: hay que recordar cómo se llama el método en cada clase, y no se pueden
+  usar de forma intercambiable. Cada medio de pago nuevo obliga a agregar otro método en Caja.
+
+Refactorización 1: Rename Method
+  - PagoTarjeta.realizarPago(importe) pasa a cobrar(double monto).
+  - PagoMercadoPago.procesarTransferencia(alias, valor) pasa a cobrar(double monto). El alias
+    es un dato del medio de pago, no de cada cobro, así que pasa a ser un atributo que se
+    recibe en el constructor, igual que titular y cuotas en PagoTarjeta. Así las tres firmas
+    quedan iguales.
+
+Refactorización 2: Extract Superclass
+  - Se creó la clase abstracta Pago con el método abstracto cobrar(double monto). Las tres
+    clases extienden Pago y hacen @Override de cobrar.
+  - Caja: los tres métodos se reemplazaron por uno solo, cobrar(Pago pago, double monto), que
+    llama a pago.cobrar(monto) y suma al total.
+  - Run: llama siempre a caja.cobrar(...) y crea PagoMercadoPago con el alias.
+
+Ojo con los nombres: Extract Superclass es el nombre de la tabla del apunte. En el ejemplo de
+  clase (ejemplo15) se usó una interfaz en lugar de una clase abstracta y se llamó
+  "Introduce Interface". El nombre del catálogo para eso es Extract Interface. Una interfaz
+  Pago con cobrar(double monto) también valía, porque las clases no comparten atributos ni
+  código.
+
+Otras opciones del apunte: Add Parameter o Parameterize Method sirven cuando las firmas
+  difieren en parámetros que sí hay que agregar o unificar. Move Method sirve si parte del
+  comportamiento está en la clase equivocada.
+Cómo se preservó la salida: Caja sigue sumando el monto sin el recargo de la tarjeta. Por eso
+  el total sigue dando $56100.0, aunque la tarjeta en 6 cuotas imprima $33000.0.

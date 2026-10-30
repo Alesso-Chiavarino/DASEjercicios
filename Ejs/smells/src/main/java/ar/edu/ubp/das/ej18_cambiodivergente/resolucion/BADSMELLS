@@ -1,0 +1,23 @@
+Smell: Cambio divergente (Divergent Change)
+Dónde: Pedido. calcularTotal es lógica de negocio, exportarCSV y exportarJSON son formato de
+  exportación, y guardar y borrar son persistencia (SQL).
+Por qué es un problema: la clase se modifica por razones distintas: si cambia el descuento,
+  si cambia un formato de exportación o si cambia la base de datos, siempre hay que tocar
+  Pedido. Viola el principio de responsabilidad única: tiene demasiadas responsabilidades y
+  la afecta cualquier tipo de cambio.
+
+Refactorización: Extract Class (dos veces, una por cada motivo de cambio)
+  - ExportadorPedidos: se llevó exportarCSV y exportarJSON. Ahora reciben el Pedido por
+    parámetro y le piden los datos por getters.
+  - RepositorioPedidos: se llevó guardar y borrar, también recibiendo el Pedido.
+  - Pedido: se queda solo con la lógica de negocio (agregarItem y calcularTotal). Se le
+    agregaron getNumero, getCliente y getItems para que las clases nuevas lean sus datos.
+  - Run: crea un ExportadorPedidos y un RepositorioPedidos y les pasa el pedido.
+  - Item quedó igual.
+
+Ahora cada clase cambia por un solo motivo: un formato nuevo (por ejemplo XML) se agrega en
+  ExportadorPedidos, un cambio de base de datos toca solo RepositorioPedidos, y un cambio
+  en el descuento toca solo Pedido.
+
+Otras opciones del apunte: la tabla solo da Extract Class para este smell. No confundirlo con
+  Cambio en cadena, que es al revés: un solo cambio que obliga a tocar muchas clases.

@@ -1,0 +1,35 @@
+Smell: Clase de datos (Data Class)
+Dónde: Producto (nombre público, getters y setters de todo, getEtiquetas que
+devuelve la lista real) y Almacen, que hace las cuentas con los datos de Producto.
+
+Por qué es un problema: Producto solo guarda datos, sin comportamiento. La lógica
+(reponer, vender controlando el stock, aumentar el precio, no repetir etiquetas)
+quedó dispersa en Almacen, que manipula los datos desde afuera. Cualquiera puede
+romper el estado: cambiar el nombre, setStock(-5), o getEtiquetas().add(...)
+salteando el control de repetidos.
+
+Refactorización: Encapsulate Field
+  - Producto.nombre pasa de public a private, con getNombre().
+
+Refactorización: Move Method
+  - Lo que Almacen hacía con los datos de Producto pasa a Producto: reponer,
+    hayStock, vender, aplicarAumento y agregarEtiqueta.
+  - Almacen.reponer y Almacen.vender le piden el cambio a Producto y se quedan
+    solo con los mensajes por pantalla.
+  - Almacen.aplicarAumento y Almacen.etiquetar se borran: después de mover la
+    lógica solo delegaban (el apunte permite dejar la delegación o eliminar el
+    método viejo). El main llama a arroz.aplicarAumento(10), etc.
+
+Refactorización: Encapsulate Collection
+  - getEtiquetas() devuelve Collections.unmodifiableList(etiquetas): se puede
+    leer pero no modificar. Se borró setEtiquetas y se agregaron agregarEtiqueta
+    y quitarEtiqueta.
+
+Refactorización: Remove Setting Method
+  - Con la lógica movida, setPrecio y setStock solo cargaban el valor inicial
+    en el main: pasan al constructor Producto(nombre, precio, stock) y se borran.
+
+Otras opciones del apunte: se usaron las tres de la tabla (Move Method,
+Encapsulate Field, Encapsulate Collection); Remove Setting Method es del catálogo.
+Cómo se preservó la salida: aplicarAumento hace precio + precio * porcentaje / 100
+en el mismo orden, y la lista no modificable se imprime igual ([oferta]).

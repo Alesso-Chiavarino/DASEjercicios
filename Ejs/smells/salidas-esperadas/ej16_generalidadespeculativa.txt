@@ -1,0 +1,4 @@
+Reserva de Cancha 1 (fútbol 5) a las 20 hs
+  [email a nico@mail.com] Tu reserva quedó confirmada
+Reserva de Cancha 3 (pádel) a las 18 hs
+  [email a vale@mail.com] Tu reserva quedó confirmada

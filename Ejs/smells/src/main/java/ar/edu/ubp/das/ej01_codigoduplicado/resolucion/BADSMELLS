@@ -1,0 +1,23 @@
+Smell: Código duplicado (Duplicated Code)
+Dónde: SocioComun.imprimirCarnet() y SocioPremium.imprimirCarnet() (idénticos),
+       y en Gimnasio.cobrarMensual() / cobrarAnual() (cálculo del recargo e impresión).
+Por qué es un problema: el mismo bloque de código aparece en más de un lugar, así que
+cualquier cambio (por ejemplo el formato del carnet o la tasa de mora) hay que
+replicarlo en todos lados, y si te olvidás de uno quedan inconsistentes.
+
+Refactorización: Pull Up Method
+  - Socio: se agregó imprimirCarnet() una sola vez. Como Socio ya declaraba el
+    método abstracto getCuotaBase(), el método subido lo usa (paso "declarar y
+    utilizar un método get abstracto" del apunte).
+  - SocioComun y SocioPremium: se borró imprimirCarnet(); cada una solo
+    implementa getCuotaBase(), que es lo único que cambia entre ellas.
+
+Refactorización: Extract Method
+  - Gimnasio: el recargo por mora, el total y las cuatro líneas de impresión
+    pasaron a un método privado cobrar(tipo, socio, cuota).
+  - cobrarMensual() y cobrarAnual() solo calculan su cuota (la anual con el 15%
+    de descuento) y llaman a cobrar() con "mensual" o "anual".
+
+Otras opciones del apunte: Form Template Method, si los dos carnets tuvieran los
+mismos pasos pero alguno distinto (cada subclase implementa ese paso). Extract
+Class, si el código repetido estuviera en clases que no comparten superclase.

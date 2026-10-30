@@ -1,0 +1,35 @@
+Smell: Cadena de mensajes (Message Chains)
+Dónde: Despachante.despachar, con cadenas como
+pedido.getCliente().getDireccion().getCiudad().getProvincia().getRecargoEnvio()
+
+Por qué es un problema: Despachante tiene que conocer toda la estructura
+Pedido -> Cliente -> Direccion -> Ciudad -> Provincia para sacar unos pocos datos.
+Queda muy acoplado y frágil: si cambia cualquier eslabón (por ejemplo, la
+provincia pasa a estar en Direccion), hay que tocar Despachante.
+
+Refactorización: Hide Delegate
+  - Cada clase oculta a su delegado y ofrece lo que se le pide:
+    Ciudad: getNombreProvincia() y getRecargoEnvio(), que delegan en Provincia.
+    Direccion: getDireccionCompleta() ("calle, ciudad (provincia)") y
+    getRecargoEnvio(), que delega en Ciudad.
+    Cliente: getDireccionCompleta() y getRecargoEnvio(), que delegan en Direccion.
+    Pedido: getNombreCliente(), getDireccionEnvio() y getRecargoEnvio(), que
+    delegan en Cliente.
+  - Despachante solo le habla a Pedido: getNombreCliente(), getDireccionEnvio(),
+    getMonto() y getRecargoEnvio().
+  - Como nadie necesita ya los objetos intermedios, se borraron los getters que
+    los devolvían (getCliente, getDireccion, getCiudad, getProvincia), así no se
+    puede volver a armar la cadena.
+
+Ojo con exagerar: si se agrega un método que delega por cada dato en cada clase,
+Cliente y Ciudad terminan siendo solo pasamanos y aparece Intermediario (Middle
+Man); el apunte avisa que ese smell sale de delegar de más para evitar cadenas de
+mensajes. Por eso se agregaron solo los métodos que usa Despachante, y calle,
+ciudad y provincia se juntaron en getDireccionCompleta() en vez de pasar cada
+dato por separado por las cuatro clases.
+
+Otras opciones del apunte: la tabla trae solo Hide Delegate. También se podría
+mover la cuenta del total a Pedido (Move Method: getTotalConEnvio()), para que
+Despachante ni siquiera pida el recargo.
+Cómo se preservó la salida: getDireccionCompleta() arma el mismo texto que antes
+y el total sigue siendo monto + recargo, en ese orden.
